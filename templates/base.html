@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}uncle-auth{% endblock %}</title>
+  <style>
+    body { font-family: -apple-system, "Segoe UI", Tahoma, sans-serif;
+           background:#f4f5f7; margin:0; padding:40px; }
+    .card { max-width:380px; margin:40px auto; background:#fff; padding:28px;
+            border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,.08); }
+    h1 { font-size:20px; margin:0 0 18px; }
+    input { width:100%; padding:10px; margin:6px 0 14px; box-sizing:border-box;
+            border:1px solid #d0d3d9; border-radius:8px; font-size:14px; }
+    button { width:100%; padding:11px; border:0; border-radius:8px;
+             background:#e8530e; color:#fff; font-size:15px; cursor:pointer; }
+    a { color:#e8530e; text-decoration:none; }
+    .flash { padding:10px 12px; border-radius:8px; margin-bottom:14px; font-size:14px; }
+    .flash.error { background:#fdecea; color:#b3261e; }
+    .flash.success { background:#e7f5ec; color:#1b7a3e; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

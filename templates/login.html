@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}เข้าสู่ระบบ{% endblock %}
+{% block content %}
+  <h1>เข้าสู่ระบบ</h1>
+  <form method="post">
+    <input name="username" placeholder="ชื่อผู้ใช้" autofocus>
+    <input name="password" type="password" placeholder="รหัสผ่าน">
+    <button type="submit">เข้าสู่ระบบ</button>
+  </form>
+  <p>ยังไม่มีบัญชี? <a href="{{ url_for('register') }}">สมัครสมาชิก</a></p>
+{% endblock %}

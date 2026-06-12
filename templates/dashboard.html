@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}หน้าหลัก{% endblock %}
+{% block content %}
+  <h1>สวัสดี {{ username }}</h1>
+  <p>เข้าสู่ระบบสำเร็จแล้ว</p>
+  <form method="post" action="{{ url_for('change_password') }}">
+    <input name="old_password" type="password" placeholder="รหัสผ่านเดิม">
+    <input name="new_password" type="password" placeholder="รหัสผ่านใหม่">
+    <button type="submit">เปลี่ยนรหัสผ่าน</button>
+  </form>
+  <p style="margin-top:16px"><a href="{{ url_for('logout') }}">ออกจากระบบ</a></p>
+{% endblock %}
