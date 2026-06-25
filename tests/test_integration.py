@@ -96,6 +96,30 @@ def test_login_nonexistent_user_fails(client):
     assert "ไม่ถูกต้อง" in res.get_data(as_text=True)
 
 
+def test_login_locks_account_after_five_failed_attempts(client):
+    _register(client, "somchai", "pass1234")
+    for _ in range(5):
+        res = _login(client, "somchai", "wrongpass")
+        assert "ไม่ถูกต้อง" in res.get_data(as_text=True)
+
+    res6 = _login(client, "somchai", "pass1234")
+    assert "บัญชีถูกล็อก" in res6.get_data(as_text=True)
+    assert "สวัสดี somchai" not in res6.get_data(as_text=True)
+
+
+def test_login_success_resets_failed_attempts(client):
+    _register(client, "somchai", "pass1234")
+    for _ in range(4):
+        _login(client, "somchai", "wrongpass")
+
+    res = _login(client, "somchai", "pass1234")
+    assert "สวัสดี somchai" in res.get_data(as_text=True)
+
+    users = storage.load_users()
+    assert users["somchai"]["failed_attempts"] == 0
+    assert users["somchai"].get("locked_until") is None
+
+
 # ---------- protected page ----------
 
 def test_dashboard_requires_login(client):
